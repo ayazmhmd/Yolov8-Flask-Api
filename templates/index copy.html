@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection using YOLO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf7f0; /* Light green background */
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px; /* Increased width for dashboard layout */
+            margin: auto;
+            background-color: #ffffff; /* White container background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two-column grid layout */
+            gap: 20px; /* Gap between grid items */
+        }
+        h2 {
+            color: #10743b; /* Dark green heading */
+            text-align: center;
+            margin-bottom: 20px;
+            grid-column: span 2; /* Spanning full width of grid */
+        }
+        .upload-form {
+            background-color: #f0f9f0; /* Light green background for forms */
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #4caf50; /* Green border */
+        }
+        .form-title {
+            color: #4caf50; /* Green form title */
+            margin-bottom: 10px;
+        }
+        .form-input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: calc(100% - 20px); /* Adjusting for padding */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-button {
+            background-color: #4CAF50; /* Green button background */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            width: 100%; /* Full width button */
+        }
+        .form-button:hover {
+            background-color: #45a049; /* Darker green hover */
+        }
+        .webcam-button {
+            background-color: #007bff; /* Blue button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            width: 100%; /* Full width button */
+        }
+        .webcam-button:hover {
+            background-color: #0056b3; /* Darker blue hover */
+        }
+        .output-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Object Detection using YOLO</h2>
+        
+        <!-- Form for image upload -->
+        <div class="upload-form">
+            <h3 class="form-title">Upload Image</h3>
+            <form action="/predict_img" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" class="form-input">
+                <input type="submit" value="Upload" class="form-button">
+            </form>
+        </div>
+        
+        <!-- Form for video upload -->
+        <div class="upload-form">
+            <h3 class="form-title">Upload Video</h3>
+            <form action="/predict_video" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" class="form-input">
+                <input type="submit" value="Upload" class="form-button">
+            </form>
+        </div>
+        
+        <!-- Button for Webcam Feed -->
+        <button class="webcam-button" onclick="startWebcamFeed()">Start Webcam Feed</button>
+        
+        <!-- Display area for processed output -->
+        {% if image_path %}
+        <div class="upload-form">
+            <h3 class="form-title">Processed Image</h3>
+            <img src="{{ url_for('static', filename=image_path) }}" class="output-img">
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function startWebcamFeed() {
+            window.location.href = "/webcam_feed";
+        }
+    </script>
+</body>
+</html>
